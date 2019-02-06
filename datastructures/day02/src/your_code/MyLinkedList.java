@@ -25,7 +25,9 @@ public class MyLinkedList {
     }
 
     public MyLinkedList() {
-        // TODO
+        head = null;
+        tail = null;
+        size = 0;
     }
 
     public int size() {
@@ -45,30 +47,73 @@ public class MyLinkedList {
     }
 
     public void addLast(Chicken c) {
-        // TODO
+        if(tail != null){
+            tail.next = new Node(c, tail, null);
+            tail = tail.next;
+        } else {
+            head = new Node(c, null, null);
+            tail = head;
+        }
+        size++;
     }
 
     public void addFirst(Chicken c) {
-        // TODO
+        if(head != null) {
+            head = new Node(c, null, head);
+        } else {
+            head = new Node(c, null, null);
+            tail = head;
+        }
+        size++;
+
     }
 
     public Chicken get(int index) {
-        // TODO
-        return null;
+        if(index > size){
+            throw new IndexOutOfBoundsException("End of list or beyond!");
+
+        } else {
+            Node curr = head;
+            for(int i = 0; i < index; i++){
+                curr = curr.next;
+            }
+            return curr.val;
+
+        }
     }
 
     public Chicken remove(int index) {
-        // TODO
-        return null;
+        if(index > size){
+            throw new IndexOutOfBoundsException("End of list or beyond!");
+
+        } else {
+            Node curr = head;
+            for(int i = 0; i < index; i++){
+                curr = curr.next;
+            }
+            if(curr.prev != null) {
+                curr.prev.next = curr.next;
+            }
+            if(curr.next != null) {
+                curr.next.prev = curr.prev;
+            }
+            size--;
+            return curr.val;
+
+        }
     }
 
     public Chicken removeFirst() {
-        // TODO
-        return null;
+        Node temp = head;
+        head = head.next;
+        size--;
+        return temp.val;
     }
 
     public Chicken removeLast() {
-        // TODO
-        return null;
+        Node temp = tail;
+        tail = tail.prev;
+        size--;
+        return temp.val;
     }
 }
