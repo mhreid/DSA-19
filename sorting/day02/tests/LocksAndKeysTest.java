@@ -4,7 +4,8 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
-public class LocksAndKeysTest {
+public class
+LocksAndKeysTest {
 
     @Test
     public void testLocksAndKeys1() {

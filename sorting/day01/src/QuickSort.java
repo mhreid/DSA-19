@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class QuickSort extends SortAlgorithm {
@@ -11,17 +14,20 @@ public class QuickSort extends SortAlgorithm {
     }
 
     /**
-     * TODO
-     * Best-case runtime:
-     * Worst-case runtime:
-     * Average-case runtime:
+     * Best-case runtime: O(NlgN)
+     * Worst-case runtime: O(N^2)
+     * Average-case runtime: O(NlgN)
      *
-     * Space-complexity:
+     * Space-complexity: O(logN)
      */
     @Override
     public int[] sort(int[] array) {
-        // TODO: Sort the array. Make sure you avoid the O(N^2) runtime worst-case
+        if(array.length >= -1){
+            shuffleArray(array);
+            quickSort(array,0,array.length - 1);
+        } //in else should call insertion sort but didn't want to import
         return array;
+
     }
 
     /**
@@ -33,9 +39,11 @@ public class QuickSort extends SortAlgorithm {
      * @param hi The ending index of the subarray being considered (inclusive)
      */
     public void quickSort(int[] a, int lo, int hi) {
+
         if (lo < hi) {
             int p = partition(a, lo, hi);
-            // TODO
+            quickSort(a, lo,  p - 1);
+            quickSort(a, p + 1, hi);
         }
     }
 
@@ -49,8 +57,27 @@ public class QuickSort extends SortAlgorithm {
      * @param hi The ending index of the subarray being considered (inclusive)
      */
     public int partition(int[] array, int lo, int hi) {
-        // TODO
-        return 0;
+        int pivot = array[lo];
+        int p1 = lo + 1;
+        int p2 = hi;
+        while(p1 <= p2){
+            if(array[p1] <= pivot){
+                p1 ++;
+            }
+            else if(array[p2] >= pivot){
+                p2--;
+            }
+            else{
+                swap(array ,p1 ,p2);
+            }
+        }
+        int[] left = new int[p1 - lo - 1];
+        p1--;
+        System.arraycopy(array, lo + 1,left,0,p1 - lo);
+
+        System.arraycopy(left,0,array,lo,p1 - lo);
+        array[p1] = pivot;
+        return p1 ;
     }
 
 }

@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class Problems {
 
@@ -31,6 +28,7 @@ public class Problems {
             seen.add(j, A[i]);
             out[i] = getMedian(seen);
         }
+        System.out.println(Arrays.toString(out));
         return out;
     }
 
@@ -41,8 +39,25 @@ public class Problems {
      * @return the median of the stream, after each element has been added
      */
     public static double[] runningMedian(int[] inputStream) {
+        PriorityQueue<Integer> top = minPQ();
+        PriorityQueue<Integer> bottom = maxPQ();
         double[] runningMedian = new double[inputStream.length];
-        // TODO
+        if(inputStream.length > 0){
+            bottom.offer(inputStream[0]);
+            runningMedian[0] = inputStream[0];
+        }
+        for(int i = 1; i < runningMedian.length; i++){
+            top.offer(inputStream[i]);
+            top.offer(bottom.poll());
+            bottom.offer(top.poll());
+            if(i % 2 == 1){
+                int temp = bottom.peek();
+                bottom.offer(top.poll());
+                runningMedian[i] = (1.0 * temp + bottom.peek()) / 2;
+            } else {
+                runningMedian[i] = bottom.peek();
+            }
+        }
         return runningMedian;
     }
 
