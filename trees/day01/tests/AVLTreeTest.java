@@ -87,6 +87,8 @@ public class AVLTreeTest {
             Integer[] expected = Arrays.copyOf(list.toArray(), list.size(), Integer[].class);
             Object[] traversal = bst.inOrderTraversal().toArray();
             Integer[] received = Arrays.copyOf(traversal, traversal.length, Integer[].class);
+            System.out.println(Arrays.toString(expected));
+            System.out.println(Arrays.toString(received));
             assertValidAVL(bst.root);
             assertArrayEquals(expected, received);
         }

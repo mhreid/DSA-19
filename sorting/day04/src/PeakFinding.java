@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class PeakFinding {
 
     // Return -1 if left is higher, 1 if right is higher, 0 if peak
@@ -49,13 +51,65 @@ public class PeakFinding {
 
 
     public static int findOneDPeak(int[] nums) {
-        // TODO
+        int front = 0;
+        int back = nums.length - 1;
+        while(front < back){
+            int mid = (front + back) / 2;
+            if(peakOneD(front,nums) == 0){
+                return front;
+            }
+            if(peakOneD(back, nums) == 0){
+                return back;
+            }
+            if(peakOneD(mid, nums) == 0){
+                return mid;
+            }
+            //if there is a mismatch in directions on the side, a center point is contained
+            if(peakOneD(mid, nums) != peakOneD(front, nums)){
+                back = mid;
+            }
+            else{
+                front = mid;
+            }
+
+        }
         return 0;
     }
 
     public static int[] findTwoDPeak(int[][] nums) {
-        // TODO
+        int yfront = 0;
+        int yback = nums.length - 1;
+        int xfmax = maxXIndex(yfront, 0, nums.length, nums);
+        int xbmax = maxXIndex(yback, 0, nums.length, nums);
+        int ymid;
+        int xmmax;
+
+        while(yfront <= yback){
+
+            ymid = (yfront + yback) / 2;
+            xmmax = maxXIndex(ymid, 0, nums.length, nums);
+            int pyf = peakY(xfmax,yfront, nums);
+            int pyb = peakY(xbmax,yback,  nums);
+            int pym = peakY(xmmax,ymid,  nums);
+            if(pyf== 0){
+                return new int[] {yfront, xfmax};
+            }
+            if(pyb == 0){
+                return new int[] {yback, xbmax};
+            }
+            if(pyf != pym){
+                yback = ymid;
+                xbmax = maxXIndex(yback, 0, nums.length, nums);
+            } else {
+                yfront = ymid;
+                xfmax = maxXIndex(yfront, 0, nums.length, nums);
+            }
+
+        }
+        System.out.println("oops");
         return null;
     }
 
 }
+
+
