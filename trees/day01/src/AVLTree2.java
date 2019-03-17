@@ -1,6 +1,6 @@
 import com.sun.source.tree.Tree;
 
-public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> {
+public class AVLTree2<T extends Comparable<T>> extends BinarySearchTree<T> {
 
     /**
      * Delete a key from the tree rooted at the given node.

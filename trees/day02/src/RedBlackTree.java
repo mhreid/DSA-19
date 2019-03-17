@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.NoSuchElementException;
 
 
@@ -35,19 +36,32 @@ public class RedBlackTree<T extends Comparable<T>> extends BinarySearchTree<T> {
 
     // make a left-leaning link lean to the right
     TreeNode<T> rotateRight(TreeNode<T> h) {
-        // TODO
-        return h;
+        TreeNode<T> y = h.leftChild;
+        h.leftChild = y.rightChild;
+        y.rightChild = h;
+        boolean temp = h.color;
+        h.color = y.color;
+        y.color = temp;
+        return y;
     }
 
     // make a right-leaning link lean to the left
     TreeNode<T> rotateLeft(TreeNode<T> h) {
-        // TODO
-        return h;
+        TreeNode<T> y = h.rightChild;
+        h.rightChild = y.leftChild;
+        y.leftChild = h;
+        boolean temp = h.color;
+        h.color = y.color;
+        y.color = temp;
+        return y;
     }
 
     // flip the colors of a TreeNode and its two children
     TreeNode<T> flipColors(TreeNode<T> h) {
-        // TODO
+        h.color = RED;
+        if (h.leftChild != null) h.leftChild.color = BLACK;
+        if (h.rightChild != null) h.rightChild.color = BLACK;
+
         return h;
     }
 
@@ -60,8 +74,35 @@ public class RedBlackTree<T extends Comparable<T>> extends BinarySearchTree<T> {
      * return balanced node
      */
     private TreeNode<T> balance(TreeNode<T> h) {
-        // TODO
+        if(h == null){
+            return null;
+        }
+        if(isRed(h.rightChild) && isRed(h.leftChild)){
+            flipColors(h);
+            System.out.print("huh");
+        }
+        else if(isRed(h.rightChild)){
+            System.out.print("ok");
+            System.out.print(h.key);
+            h = rotateLeft(h);
+            //how do I link this back up to the parent?
+            TreeNode<T> temp = root;
+            while(temp != null){
+                System.out.println(temp.key);
+                temp = temp.leftChild;
+            }
+        }
+
+        else if(isRed(h.leftChild) && h.leftChild != null && isRed(h.leftChild.leftChild)){
+            h = rotateRight(h);
+            System.out.print("ok");
+
+            balance(h);
+        }
+        balance(h.leftChild);
+        balance(h.rightChild);
         return h;
+
     }
 
 
@@ -72,7 +113,7 @@ public class RedBlackTree<T extends Comparable<T>> extends BinarySearchTree<T> {
     @Override
     TreeNode<T> insert(TreeNode<T> h, T key) {
         h = super.insert(h, key);
-        // TODO: use balance to correct for the three rotation cases
+        root = balance(root);
         return h;
     }
 
@@ -137,6 +178,7 @@ public class RedBlackTree<T extends Comparable<T>> extends BinarySearchTree<T> {
         if (n == null) return true;
         if (isRed(n.rightChild)) return false;
         if (isRed(n.leftChild) && isRed(n.leftChild.leftChild)) return false;
+        //why does this not throw null pointer exceptions?
         return is23(n.rightChild) && is23(n.leftChild);
     }
 
