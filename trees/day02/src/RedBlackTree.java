@@ -78,29 +78,18 @@ public class RedBlackTree<T extends Comparable<T>> extends BinarySearchTree<T> {
             return null;
         }
         if(isRed(h.rightChild) && isRed(h.leftChild)){
-            flipColors(h);
-            System.out.print("huh");
+            h = flipColors(h);
         }
         else if(isRed(h.rightChild)){
-            System.out.print("ok");
-            System.out.print(h.key);
             h = rotateLeft(h);
-            //how do I link this back up to the parent?
-            TreeNode<T> temp = root;
-            while(temp != null){
-                System.out.println(temp.key);
-                temp = temp.leftChild;
-            }
+
         }
 
         else if(isRed(h.leftChild) && h.leftChild != null && isRed(h.leftChild.leftChild)){
             h = rotateRight(h);
-            System.out.print("ok");
 
             balance(h);
         }
-        balance(h.leftChild);
-        balance(h.rightChild);
         return h;
 
     }
@@ -108,12 +97,12 @@ public class RedBlackTree<T extends Comparable<T>> extends BinarySearchTree<T> {
 
     /**
      * Recursively insert a new node into the BST
-     * Runtime: TODO
+     * Runtime: O(lgN)
      */
     @Override
     TreeNode<T> insert(TreeNode<T> h, T key) {
         h = super.insert(h, key);
-        root = balance(root);
+        h = balance(h);
         return h;
     }
 

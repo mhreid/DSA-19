@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class NQueens {
@@ -36,7 +37,15 @@ public class NQueens {
         }
         return false;
     }
-
+    public static boolean checkAll(char[][] board, int r, int c){
+        if(checkDiagonal(board, r, c)) return true;
+        for(int i = 0; i < Math.max(r, c); i++){
+            if(board[r][i] == 'Q') return true;
+            if(board[i][c] == 'Q') return true;
+        }
+        //optimize this later to not check unvisited
+        return false;
+    }
 
     /**
      * Creates a deep copy of the input array and returns it
@@ -50,9 +59,34 @@ public class NQueens {
 
 
     public static List<char[][]> nQueensSolutions(int n) {
-        // TODO
         List<char[][]> answers = new ArrayList<>();
+        char[][] board = new char[n][n];
+        for(char[] r : board){
+            Arrays.fill(r, '.');
+        }
+        helper2(board, 0, 0, n, answers);
         return answers;
+    }
+
+
+    public static void helper2(char[][] board, int r, int c, int rm, List<char[][]> answers){
+        if(c >= board.length){
+            c = 0;
+            r++;
+        }
+        if(rm == 0){
+            answers.add(copyOf(board));
+        }
+        else if(r >= board.length){
+            ;
+        } else {
+            if(!checkAll(board, r, c)){
+                board[r][c] = 'Q';
+                helper2(board, r + 1, 0, rm - 1, answers);
+                board[r][c] = '.';
+            }
+            helper2(board, r, c + 1, rm, answers);
+        }
     }
 
 }

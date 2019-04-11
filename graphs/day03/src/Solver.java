@@ -11,7 +11,7 @@ public class Solver {
     private State solutionState;
     private boolean solved = false;
 
-    /**
+    /**F
      * State class to make the cost calculations simple
      * This class holds a board state and all of its attributes
      */
@@ -26,8 +26,7 @@ public class Solver {
             this.board = board;
             this.moves = moves;
             this.prev = prev;
-            // TODO
-            cost = 0;
+            this.cost = board.manhattan() + moves;
         }
 
         @Override
@@ -44,7 +43,8 @@ public class Solver {
      */
     private State root(State state) {
         // TODO: Your code here
-        return null;
+        //totally not sure if this is it
+        return state.prev;
     }
 
     /*
@@ -54,6 +54,33 @@ public class Solver {
      */
     public Solver(Board initial) {
         // TODO: Your code here
+        State c = new State(initial, 0, null);
+        solutionState = c;
+
+        //solutionState = new State(initial,0 , null);
+        PriorityQueue<State> pq = new PriorityQueue<>((State a, State b) -> a.cost - b.cost);
+        pq.add(c);
+        HashMap<Board, Integer> v = new HashMap<>();
+        v.put(initial, 0);
+        boolean solvable = isSolvable();
+        while(!pq.isEmpty() && solvable){
+            c = pq.poll();
+            if(c.board.isGoal()){
+                minMoves = c.moves;
+                solutionState = c;
+                solved = true;
+                return;
+            }
+            for(Board n: c.board.neighbors()){
+                if(!v.containsKey(n) || c.moves + 1 < v.get(n)) {
+
+                    v.put(n, c.moves + 1);
+                    pq.add(new State(n, c.moves + 1, c));
+                }
+            }
+
+        }
+
     }
 
     /*
@@ -61,8 +88,8 @@ public class Solver {
      * Research how to check this without exploring all states
      */
     public boolean isSolvable() {
-        // TODO: Your code here
-        return false;
+        return solutionState.board.solvable();
+
     }
 
     /*

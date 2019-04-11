@@ -27,13 +27,25 @@ public class PuzzleTest {
     public void testManhattan() {
         assertEquals(board.manhattan(), 3);
     }
+    @Test
+    public void testNeighbors() {
+        board.neighbors();
+        int[][] initS = {{1,2,3}, {4,0,5}, {6,7,8}};
+        Board temp = new Board(initS);
+        temp.neighbors();
+
+    }
 
     /**
-     * Test method for boolean isGoal().
+     * Test method for boolean idistsGoal().
      */
     @Test
     public void testGoal() {
         assertEquals(board.isGoal(), false);
+        int[][] s = {{1,2,3}, {4,5,6}, {7,8,0}};
+        Board t = new Board(s);
+        assertEquals(t.isGoal(), true);
+
     }
 
     // Test solver with several initial board states

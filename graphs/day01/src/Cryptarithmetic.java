@@ -29,6 +29,24 @@ public class Cryptarithmetic {
     public static Map<Character, Integer> solvePuzzle(String S1, String S2, String S3) {
         // TODO
         Map<Character, Integer> assignments = new HashMap<>();
+        for(int i = 1; i < S1.length(); i++){
+            assignments.put(S1.charAt(i), 0);
+        }
+        for(int i = 1; i < S2.length(); i++){
+            assignments.put(S2.charAt(i), 0);
+        }
+        for(int i = 0; i < S3.length(); i++){
+            assignments.put(S3.charAt(i), 0);
+        }
+        assignments.put(S1.charAt(0), 1);
+        assignments.put(S2.charAt(0), 1);
+
         return assignments;
+    }
+
+    private static void helper(Map<Character, Integer> assignments, String S1, String S2, String S3){
+        if(!validSolution(S1, S2, S3, assignments)){
+
+        }
     }
 }
