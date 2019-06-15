@@ -200,5 +200,15 @@ public class RubiksCubeTest {
         }
     }
 
+    @Test
+    public void testCost() {
+        RubiksCube c = new RubiksCube();
+        c = c.rotate('u');
+        assertEquals(10, c.cost());
+        assertEquals(8, c.cost2());
+        c = c.rotate('u');
+        assertEquals(16, c.cost2());
+
+    }
 
 }

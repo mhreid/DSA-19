@@ -10,9 +10,8 @@ public class Board {
 
     private int n;
     public int[][] tiles;
-    private int[][] goal = {{}};
-    private int r0;
-    private int c0;
+    private int[][] goal;
+
 
 
     private int[][] createGoal(){

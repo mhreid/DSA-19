@@ -53,13 +53,13 @@ public class Solver {
      * and a identify the shortest path to the the goal state
      */
     public Solver(Board initial) {
-        // TODO: Your code here
         State c = new State(initial, 0, null);
         solutionState = c;
 
         //solutionState = new State(initial,0 , null);
         PriorityQueue<State> pq = new PriorityQueue<>((State a, State b) -> a.cost - b.cost);
         pq.add(c);
+        //this checks if that board has been seen before and the moves to get there previously
         HashMap<Board, Integer> v = new HashMap<>();
         v.put(initial, 0);
         boolean solvable = isSolvable();
